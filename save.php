@@ -1,8 +1,5 @@
 <?php
 	require "general.php";
-	if(!isLogin()){
-		goHome();
-	}
 	$no = 1;
 	$max = intval($_COOKIE['qnumb']);
 	$db_ans = $_COOKIE['db_ans'];
@@ -14,5 +11,6 @@
 		mysql_query($query);
 		$no++;
 	}
-	echo "Try Out has been created. Try Out can be accessed via : ";
+	$link = $_COOKIE['link'];
+	echo "Try Out has been created. Try Out can be accessed via this <a href=\"$link\">link</a>";
 ?>

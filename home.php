@@ -1,9 +1,6 @@
 <html>
 	<?php
 		require "general.php";
-		if(!isLogin()){
-			goHome();
-		}
 		getHead();
 	?>
 	<body>

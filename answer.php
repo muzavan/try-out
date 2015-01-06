@@ -4,9 +4,11 @@
 		header('Location : home.php');
 		exit;
 	}
-		if(pathinfo($_FILES['document']['name'], PATHINFO_EXTENSION)!="pdf")
+		if(pathinfo($_FILES['document']['name'], PATHINFO_EXTENSION)!="pdf"){
 			header('Location : home.php');
-
+			echo "File Uploaded is not a PDF!";
+			exit;
+		}
 		$i = 0;
 		while(file_exists("soal/$i-{$_FILES['document']["name"]}")){
 			$i++;
@@ -18,21 +20,25 @@
 		$document = "soal/$i-{$_FILES['document'] ['name']}";
 		$qnumb = $_POST['question'];
 		$anumb = $_POST['answer'];
-		$name = $_POST['name'];
-		$page = createPage($name,$document,$qnumb,$anumb);
 		$name = naming($_POST['name']);		
 		$db_ans = "db_".$name;
+		$db_has = "has_".$name;
 		$name = $name.".php";
-		$myfile = fopen($name, "w") or die("Unable to open file!");
-		fwrite($myfile, $page);
-		fclose($myfile);
+		$page = createPage($_POST['name'],$name,$document,$qnumb,$anumb,$db_ans,$db_has);
 		setcookie("qnumb",$qnumb);
 		setcookie("db_ans",$db_ans);
+		setcookie("link",$name);
 		$query ="CREATE TABLE IF NOT EXISTS `$db_ans` (
 				`no` INT AUTO_INCREMENT ,
 				`answer` VARCHAR(1) NOT NULL, PRIMARY KEY (`no`)
 			);";
 		//echo $query;
+		$result = mysql_query($query);
+		$query ="CREATE TABLE IF NOT EXISTS `$db_has` (
+				`name` TEXT NOT NULL ,
+				`id` TEXT ,
+				`skor` INT
+			);";
 		$result = mysql_query($query);
 		if(!$result){
 			header('Location : home.php');
