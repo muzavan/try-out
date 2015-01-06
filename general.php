@@ -13,11 +13,9 @@
 	}
 
 	function goHome(){
-		if(!isLogin()){
 			header('HTTP/1.0 302 Found');
 			header('Location: login.php');
 			exit;
-		}
 	}
 
 	function getBodyFooter(){
@@ -36,6 +34,7 @@
 	function naming($str){
 		$str = strtolower($str);
 		$str = str_replace(" ", "-", $str);
+		return $str;
 	}
 
 ?>
