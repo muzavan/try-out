@@ -16,11 +16,16 @@
 
 		connectDatabase();
 		$document = "soal/$i-{$_FILES['document'] ['name']}";
+		$qnumb = $_POST['question'];
+		$anumb = $_POST['answer'];
+		$name = $_POST['name'];
+		$page = createPage($name,$document,$qnumb,$anumb);
 		$name = naming($_POST['name']);		
 		$db_ans = "db_".$name;
 		$name = $name.".php";
-		$qnumb = $_POST['question'];
-		$anumb = $_POST['answer'];
+		$myfile = fopen($name, "w") or die("Unable to open file!");
+		fwrite($myfile, $page);
+		fclose($myfile);
 		setcookie("qnumb",$qnumb);
 		setcookie("db_ans",$db_ans);
 		$query ="CREATE TABLE IF NOT EXISTS `$db_ans` (

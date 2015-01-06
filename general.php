@@ -37,4 +37,120 @@
 		return $str;
 	}
 
+	function createPage($name,$link,$qnumb,$anumb){
+		$car = 'c';
+		switch($anumb){
+			case 3 :
+				$car = 'c';
+				break;
+			case 4 :
+				$car = 'd';
+				break;
+			case 5 :
+				$car = 'e';
+				break;
+		}
+
+		$page ='<?php $car=\''.$car.'\';'.'$qnumb='.$qnumb.';'.'?>';
+		$page = $page."<html>";
+		$page = $page."<head>
+				<!-- Latest compiled and minified CSS -->
+				<title>$name</title>
+				<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css\">
+				<script type='text/javascript' src='https://code.jquery.com/jquery-1.11.2.min.js'></script>
+				</head>";
+		$page = $page."<body>";
+		$page = $page."<div class='container'> <h3>Quesion's List can be downloaded <a href='$link'>here</a>. </h3> </div>";
+		$page = $page.'<div class=\'container\'>
+		<form role=\'form\' action=\'save.php\' method=\'post\'>
+			<div class=\'row\'>
+
+				<div class=\'col-md-6\'>
+					<div class=\'table-responsive\'>
+						<table class=\'table\'>
+						<thead>
+						<th>No.</th>
+						<?php
+							$k=\'a\';
+							while($k<=$car){
+								echo "<th>$k</th>";
+								$k++;
+							}
+						?>
+						</thead>
+						<tbody>
+							<?php
+								$j=1;
+								while($j<=$qnumb/2){
+									echo \'<tr>\';
+							?>
+							
+							<th><label><?php echo $j;?></label></th>
+							<?php 
+									$k =\'a\';
+									while($k<=$car){
+							?>
+							<th><input type=\'radio\' name=\'<?php echo $j;?>\' value=\'<?php echo $k;?>\' required=\'true\'></th>						
+							<?php
+
+									$k++;
+									}
+								echo \'</tr>\';
+								$j++;	
+								}
+							?>
+
+						</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div class=\'col-md-6\'>
+					<div class=\'table-responsive\'>
+						<table class=\'table\'>
+						<thead>
+						<th>No.</th>
+						<?php
+							$k=\'a\';
+							while($k<=$car){
+								echo "<th>$k</th>";
+								$k++;
+							}
+						?>
+						</thead>
+						<tbody>
+							<?php
+								while($j<=$qnumb){
+									echo \'<tr>\';
+							?>
+							
+							<th><label><?php echo $j;?></label></th>
+							<?php 
+									$k =\'a\';
+									while($k<=$car){
+							?>
+							<th><input type=\'radio\' name=\'<?php echo $j;?>\' value=\'<?php echo $k;?>\' required=\'true\'></th>						
+							<?php
+
+									$k++;
+									}
+								echo \'</tr>\';
+								$j++;	
+								}
+							?>
+
+						</tbody>
+						</table>
+					</div>
+				</div>
+
+				<input type=\'submit\' value=\'Submit\'/>
+			</div>
+		</form>
+	</div>';
+		$page = $page."</body>";
+		$page = $page."</html>";
+		return $page;
+	}
+
 ?>
